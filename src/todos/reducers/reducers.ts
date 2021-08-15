@@ -1,26 +1,26 @@
-import { createReducer, ActionType } from 'typesafe-actions';
+import { ActionType, createReducer, Reducer } from 'typesafe-actions';
 import todosTypes from '../types';
-import { generateAsyncActions } from '../../_shared/store/generateAsyncActions';
+import { generateAsyncActions, setRequest, setResponse } from '../../_shared/store/utils';
 import { Actions } from '../../_shared/store/actions';
-import todosActions from '../actions';
+import { Request } from '../../_shared/store/types';
+import { getAllTodos } from '../actions/actions';
 
-type TodosState = {
-   todosList: todosTypes.TodosResponse;
+export const todosReducerKey = 'todos';
+
+export type TodosState = Request & {
+   data: todosTypes.TodosResponse;
 };
 
-type TodosActions = ActionType<typeof todosActions.getAllTodos.success>;
+type ActionsType = ActionType<typeof getAllTodos>;
 
-const initialState = { todosList: [] } as TodosState;
+const initialState = { data: [] } as TodosState;
 
-const { success } = generateAsyncActions(Actions.TODOS);
+const { request, success } = generateAsyncActions(Actions.TODOS);
 
-function setResponse(state: TodosState, action: TodosActions) {
-   return {
-      ...state,
-      todosList: [...action.payload],
-   };
-}
-
-const todosReducer = createReducer(initialState).handleAction(success, setResponse);
+const todosReducer: Reducer<TodosState, ActionsType> = createReducer(initialState)
+   .handleAction(request, (state: TodosState) => setRequest<TodosState>(state))
+   .handleAction(success, (state: TodosState, action: todosTypes.TodosActionSuccess) =>
+      setResponse<TodosState, Partial<TodosState>>(state, { data: [...action.payload] }),
+   );
 
 export default todosReducer;

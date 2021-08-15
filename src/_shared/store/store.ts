@@ -1,13 +1,25 @@
-import { configureStore } from '@reduxjs/toolkit';
+import { createStore, applyMiddleware } from 'redux';
+import { composeWithDevTools } from 'redux-devtools-extension';
+import { todosReducerKey, TodosState } from '../../todos/reducers/reducers';
 import { sagaMiddleware } from './middleware';
 import rootReducer from './reducers';
 import rootSaga from './sagas';
 
-const store = configureStore({
-   reducer: rootReducer,
-   middleware: getDefaultMiddleware => getDefaultMiddleware().concat(sagaMiddleware),
-});
+export interface ApplicationState {
+   [todosReducerKey]: TodosState;
+}
 
-sagaMiddleware.run(rootSaga);
+const middlewares = [sagaMiddleware];
+
+function configureStore() {
+   const composeEnhancers = composeWithDevTools({});
+   const store = createStore(rootReducer, {}, composeEnhancers(applyMiddleware(...middlewares)));
+
+   sagaMiddleware.run(rootSaga);
+
+   return store;
+}
+
+const store = configureStore();
 
 export default store;

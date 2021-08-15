@@ -1,14 +1,14 @@
 import { createAsyncAction } from 'typesafe-actions';
-import { generateAsyncActions } from '../../_shared/store/generateAsyncActions';
+import { generateAsyncActions } from '../../_shared/store/utils';
 import { Actions } from '../../_shared/store/actions';
 import todosTypes from '../types';
 
 const { request, success, error } = generateAsyncActions(Actions.TODOS);
 
 const getAllTodos = createAsyncAction(request, success, error)<
-   any,
+   unknown,
    todosTypes.TodosResponse,
-   any
+   unknown
 >();
 
 export { getAllTodos };

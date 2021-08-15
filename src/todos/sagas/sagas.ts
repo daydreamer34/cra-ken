@@ -1,6 +1,6 @@
 import { SagaIterator } from 'redux-saga';
 import { takeEvery, call, put } from 'redux-saga/effects';
-import { generateAsyncActions } from '../../_shared/store/generateAsyncActions';
+import { generateAsyncActions } from '../../_shared/store/utils';
 import fetchTodos from '../api';
 import { Actions } from '../../_shared/store/actions';
 import actionsTodos from '../actions';
@@ -14,7 +14,6 @@ export function* sagaTodos(): SagaIterator {
       yield put(actionsTodos.getAllTodos.success(json));
       return json;
    } catch (error) {
-      console.log(error);
       return error;
    }
 }

@@ -1,3 +1,6 @@
+import { ActionType } from 'typesafe-actions';
+import todosActions from '../actions';
+
 type TodosResponse = {
    userId: number;
    id: number;
@@ -5,4 +8,6 @@ type TodosResponse = {
    completed: boolean;
 }[];
 
-export type { TodosResponse };
+type TodosActionSuccess = ActionType<typeof todosActions.getAllTodos.success>;
+
+export type { TodosResponse, TodosActionSuccess };
