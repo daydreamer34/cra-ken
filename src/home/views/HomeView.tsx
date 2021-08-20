@@ -1,23 +1,29 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import useTodos from '../hooks/useTodos';
-import logo from '../../_shared/assets/logo.svg';
+import logo from '../../_shared/assets/logo.png';
 
 const HomeView = () => {
-   const { todosNumber } = useTodos();
+   const { todosNumber, initData } = useTodos();
+
+   useEffect(() => {
+      initData();
+   }, []);
+
    return (
       <div className="App">
          <header className="App-header">
             <img src={logo} className="App-logo" alt="logo" />
             <p>
-               {todosNumber} Edit <code>src/App.tsx</code> and save to reload.
+               We have loaded a <span>{todosNumber} Todos</span>.
             </p>
+            <p>Open the Dev Tools and see the Redux Store!</p>
             <a
                className="App-link"
-               href="https://reactjs.org"
+               href="https://github.com/crtdaniele/cra-ken"
                target="_blank"
                rel="noopener noreferrer"
             >
-               Learn React
+               Github Project
             </a>
          </header>
       </div>
