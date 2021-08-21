@@ -1,21 +1,21 @@
-const { execSync } = require('child_process');
-const path = require('path');
-const fs = require('fs');
+import { execSync } from 'child_process';
+import { join } from 'path';
+import { mkdirSync, rmdirSync } from 'fs';
 
 if (process.argv.length < 3) {
    console.log('You have to provide a name to your app.');
    console.log('For example :');
-   console.log('npx create-craken-app my-app');
+   console.log('npx cra-ken-app my-app');
    process.exit(1);
 }
 
 const projectName = process.argv[2];
 const currentPath = process.cwd();
-const projectPath = path.join(currentPath, projectName);
+const projectPath = join(currentPath, projectName);
 const git_repo = 'https://github.com/crtdaniele/cra-ken';
 
 try {
-   fs.mkdirSync(projectPath);
+   mkdirSync(projectPath);
 } catch (err) {
    if (err.code === 'EEXIST') {
       console.log(
@@ -39,7 +39,7 @@ async function main() {
 
       console.log('Removing useless files');
       execSync('npx rimraf ./.git');
-      fs.rmdirSync(path.join(projectPath, 'bin'), { recursive: true });
+      rmdirSync(join(projectPath, 'bin'), { recursive: true });
 
       console.log('The installation is done, this is ready to use !');
    } catch (error) {
