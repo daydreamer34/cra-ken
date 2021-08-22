@@ -1,6 +1,7 @@
-import { execSync } from 'child_process';
-import { join } from 'path';
-import { mkdirSync, rmdirSync } from 'fs';
+#!/usr/bin/env node
+const { execSync } = require('child_process');
+const { join } = require('path');
+const { mkdirSync, rmdirSync } = require('fs');
 
 if (process.argv.length < 3) {
    console.log('You have to provide a name to your app.');
@@ -39,6 +40,7 @@ async function main() {
 
       console.log('Removing useless files');
       execSync('npx rimraf ./.git');
+      execSync('npx rimraf ./cra-ken-app.js');
       rmdirSync(join(projectPath, 'bin'), { recursive: true });
 
       console.log('The installation is done, this is ready to use !');

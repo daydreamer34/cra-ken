@@ -47,9 +47,9 @@
       "eject": "react-scripts eject",
       "lint": "eslint ./",
       "lint-fix": "eslint ./ --fix",
-      "version:patch": "standard-version patch",
-      "version:minor": "standard-version minor",
-      "version:major": "standard-version major"
+      "version:patch": "standard-version -- --release-as patch",
+      "version:minor": "standard-version -- --release-as minor",
+      "version:major": "standard-version -- --release-as major"
    },
    "eslintConfig": {
       "extends": [
